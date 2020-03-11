@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using ExcelDataReader;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 using Nest;
 using wiki_movies_es.Models;
 
@@ -15,17 +16,20 @@ namespace wiki_movies_es.Controllers
     public class ESController : ControllerBase
     {
         public IElasticClient Client { get; set; }
+	public IWebHostEnvironment WebHostEnvironment { get; set; }
 
-        public ESController(IElasticClient elasticClient)
+        public ESController(IElasticClient elasticClient, IWebHostEnvironment webHostEnvironment)
         {
             Client = elasticClient;
+	    WebHostEnvironment = webHostEnvironment;
         }
 
         [HttpPost("Create")]
         public IActionResult CreateIndex()
         {
-            var rootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var filePath = $"{Path.GetFullPath(Path.Combine(rootPath, @"..\..\..\Resources\wikipedia-movie-plots\wiki_movie_plots_deduped.csv"))}";
+            var rootPath = WebHostEnvironment.ContentRootPath;
+            var filePath = $"{Path.GetFullPath(Path.Combine(new []{rootPath, "Resources", "wikipedia-movie-plots", "wiki_movie_plots_deduped.csv" }))}";
+
             var movies = new List<Movie>();
             using var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read);
             using var reader = ExcelReaderFactory.CreateCsvReader(stream);
@@ -48,9 +52,8 @@ namespace wiki_movies_es.Controllers
                 };
                 movies.Add(movie);
             }
-
             var bulkResponse = Client.Bulk(b => b.Index("movies").CreateMany(movies));
-            return Ok(counter);
+            return Ok(bulkResponse.Errors);
         }
 
         [HttpGet("Search")]
