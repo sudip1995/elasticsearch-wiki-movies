@@ -1,0 +1,48 @@
+<div class="container">
+  <div>
+  <form [formGroup]="searchForm">
+    <mat-form-field class="search-input" appearance="outline">
+      <span matPrefix class="search-icon"><i class="material-icons">search</i></span>
+      <input type="text" matInput formControlName="searchText" placeholder="Search with keyword">
+    </mat-form-field>
+    <div class="filter-container">
+      <div class="year-filter">
+        <mat-label>Release Year: </mat-label>
+        <ng5-slider [options]="options" formControlName="sliderControl"></ng5-slider>
+      </div>
+      <div class="page-size-dropdown">
+        <mat-form-field>
+          <mat-label>Page Size</mat-label>
+          <select matNativeControl formControlName="pageSizeControl">
+            <option>10</option>
+            <option>25</option>
+            <option>50</option>
+          </select>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+
+  <mat-card class="result-info">
+    <mat-card-title>Total: {{searchResult.hitsMetadata.total.value}}</mat-card-title>
+    <mat-card-subtitle>Showing results: {{from}} - {{from + pageSize - 1}}</mat-card-subtitle>
+  </mat-card>
+
+  <div class="page-move">
+    <button class="page-move-button" mat-raised-button type="button"(click)="prev()">PREV PAGE</button>
+    <button class="page-move-button" mat-raised-button type="button"(click)="next()">NEXT PAGE</button>
+  </div>
+
+  <div class="result-container">
+    <div class="result" *ngFor="let res of searchResult.documents">
+      <app-movie-card [details]="res"></app-movie-card>
+    </div>
+  </div>
+
+  <div class="page-move">
+    <button class="page-move-button" mat-raised-button type="button"(click)="prev()">PREV PAGE</button>
+    <button class="page-move-button" mat-raised-button type="button"(click)="next()">NEXT PAGE</button>
+  </div>
+</div>
+
+

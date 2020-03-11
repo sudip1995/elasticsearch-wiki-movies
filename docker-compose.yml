@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  wiki-movies-es-frontend:
+    container_name: wiki-movies-es-frontend
+    build: './WikiMoviesES'
+    volumes: # Serve local "dist" dir
+      - ./dist:/usr/share/nginx/html
+    ports:
+      - "8080:80" # Forward site to localhost:8080
+
+  wiki-movies-es-backend:
+    container_name: wiki-movies-es-backend
+    build: './wiki-movies-es/wiki-movies-es'
+    ports:
+      - "7001:7001"
+  elastic-search:
+    container_name: es-wiki
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.1
+    volumes: # Persist ES data in seperate "esdata" volume
+      - esdata:/usr/share/elasticsearch/data
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    ports: # Expose ElasticSearch ports
+      - "9300:9300"
+      - "9200:9200"
+
+volumes:
+  esdata:
+

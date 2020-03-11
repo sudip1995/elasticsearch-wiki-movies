@@ -1,0 +1,8 @@
+<mat-card style="cursor:pointer;" (click)="openCard()">
+  <mat-card-title>{{details.source.title}}</mat-card-title>
+  <mat-card-subtitle>Director: {{details.source.director}}, Release Year: {{details.source.releaseYear}}</mat-card-subtitle>
+  <mat-card-content>
+    Origin: {{details.source.origin}}, Genre: {{details.source.genre}}
+  </mat-card-content>
+  <mat-card-footer class="footer"><a href="{{details.source.wikiPageLink}}" target="_blank" style="text-decoration: none">Go to Wiki Page</a></mat-card-footer>
+</mat-card>

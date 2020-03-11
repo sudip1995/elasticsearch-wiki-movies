@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wiki-movies-es", "wiki-movies-es\wiki-movies-es.csproj", "{F6840EC9-6A9E-4D0D-A031-A4BE418AFC0A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6840EC9-6A9E-4D0D-A031-A4BE418AFC0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6840EC9-6A9E-4D0D-A031-A4BE418AFC0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6840EC9-6A9E-4D0D-A031-A4BE418AFC0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6840EC9-6A9E-4D0D-A031-A4BE418AFC0A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {55006723-C8D5-48E2-931D-08B9119FF0EF}
+	EndGlobalSection
+EndGlobal
