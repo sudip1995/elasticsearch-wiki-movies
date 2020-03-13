@@ -4,8 +4,6 @@ services:
   wiki-movies-es-frontend:
     container_name: wiki-movies-es-frontend
     build: './WikiMoviesES'
-    volumes: # Serve local "dist" dir
-      - ./dist:/usr/share/nginx/html
     ports:
       - "8080:80" # Forward site to localhost:8080
 
