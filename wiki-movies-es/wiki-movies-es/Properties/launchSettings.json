@@ -23,6 +23,7 @@
       "launchUrl": "api/ES",
       "applicationUrl": "http://localhost:7001;http://localhost:7000",
       "environmentVariables": {
+	"ES_HOST": "localhost",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }

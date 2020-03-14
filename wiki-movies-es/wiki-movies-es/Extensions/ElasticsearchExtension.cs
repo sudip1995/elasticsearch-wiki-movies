@@ -13,6 +13,8 @@ namespace wiki_movies_es.Extensions
             var url = configuration["ElasticSearch:Url"];
             var defaultIndex = configuration["ElasticSearch:DefaultIndex"];
 
+	    var esHost = Environment.GetEnvironmentVariable("ES_HOST");
+            url = url.Replace("[ES_HOST]", esHost);
             var settings = new ConnectionSettings(new Uri(url))
                 .DefaultIndex(defaultIndex);
 

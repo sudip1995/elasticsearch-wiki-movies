@@ -51,9 +51,9 @@ namespace wiki_movies_es.Controllers
                     Plot = dataRow.ItemArray[7].ToString()
                 };
                 movies.Add(movie);
-            }
+	    }
             var bulkResponse = Client.Bulk(b => b.Index("movies").CreateMany(movies));
-            return Ok(bulkResponse.Errors);
+            return Ok(bulkResponse.DebugInformation);
         }
 
         [HttpGet("Search")]

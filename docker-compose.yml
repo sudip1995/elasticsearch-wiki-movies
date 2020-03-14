@@ -12,6 +12,12 @@ services:
     build: './wiki-movies-es/wiki-movies-es'
     ports:
       - "7001:80"
+    environment:
+      - ES_HOST=elastic-search
+    links: 
+      - elastic-search
+    networks:
+      - esnetwork
   elastic-search:
     container_name: es-wiki
     image: docker.elastic.co/elasticsearch/elasticsearch:7.6.1
@@ -22,9 +28,12 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - discovery.type=single-node
     ports: # Expose ElasticSearch ports
-      - "9300:9300"
       - "9200:9200"
-
+      - "9300:9300"
+    networks:
+      - esnetwork
 volumes:
   esdata:
-
+networks:
+    esnetwork:
+        driver: bridge
