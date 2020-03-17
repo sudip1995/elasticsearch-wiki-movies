@@ -22,6 +22,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
   options: Options;
   private fromYear = 1901;
   private toYear = 2100;
+  math = Math;
   constructor(private formBuilder: FormBuilder,
               private appService: AppService) {
     this.searchForm = this.formBuilder.group({
@@ -61,6 +62,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
   prev() {
     if (this.from > 1) {
       this.from -= this.pageSize;
+      this.from = Math.max(this.from, 1);
       this.getSearchResult();
     }
   }
@@ -68,6 +70,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
   next() {
     if (this.from + this.pageSize <= this.searchResult.hitsMetadata.total.value) {
       this.from += this.pageSize;
+      this.from = Math.min(this.from, this.searchResult.hitsMetadata.total.value);
       this.getSearchResult();
     }
   }
