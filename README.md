@@ -10,7 +10,8 @@ Then use this curl to index movies data in elastic-search:
 
 > #### curl -d "" -X POST http://localhost:7001/api/ES/Create
 
-![pic1](https://user-images.githubusercontent.com/17018983/76487021-3bfd4400-644b-11ea-81ef-483243647d43.png)
+> #### Go to http://localhost:8080/ to access this website
 
+![pic1](https://user-images.githubusercontent.com/17018983/79759781-f0d72a80-8340-11ea-8b29-57d212cd0454.png)
 
-![pic2](https://user-images.githubusercontent.com/17018983/76487032-415a8e80-644b-11ea-8238-0621410ceb91.png)
+![pic2](https://user-images.githubusercontent.com/17018983/79759804-f6cd0b80-8340-11ea-9d2e-1893bdd2bd36.png)
