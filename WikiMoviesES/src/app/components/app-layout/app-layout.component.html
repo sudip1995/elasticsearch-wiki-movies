@@ -25,7 +25,11 @@
 
   <mat-card class="result-info">
     <mat-card-title>Total: {{searchResult.hitsMetadata.total.value}}</mat-card-title>
-    <mat-card-subtitle>Showing results: {{from}} - {{math.min(from + pageSize - 1, searchResult.hitsMetadata.total.value)}}</mat-card-subtitle>  </mat-card>
+
+    <mat-card-subtitle>
+      Showing results: {{math.min(this.pageSize * this.pageNo + 1, searchResult.hitsMetadata.total.value)}} - {{math.min(this.pageSize * (this.pageNo + 1), searchResult.hitsMetadata.total.value)}}
+    </mat-card-subtitle>  
+  </mat-card>
 
   <div class="page-move">
     <button class="page-move-button" mat-raised-button type="button"(click)="prev()">PREV PAGE</button>

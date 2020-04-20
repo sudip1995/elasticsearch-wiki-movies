@@ -14,8 +14,8 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;
 
   searchResult: any;
-  from: number;
   pageSize: number;
+  pageNo: number;
   unSubscribe$ = new Subject();
   private searchText: any;
   private valueChanged: boolean;
@@ -31,7 +31,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
       pageSizeControl: new FormControl(10),
     });
     this.pageSize = 10;
-    this.from = 1;
+    this.pageNo = 0;
     this.valueChanged = true;
     this.searchText = '';
     this.options = {
@@ -54,23 +54,27 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     this.fromYear = yearFilter[0];
     this.toYear = yearFilter[1];
     this.pageSize = +this.searchForm.get('pageSizeControl').value;
-    this.appService.search(this.searchText, this.fromYear, this.toYear, this.from, this.pageSize).pipe(takeUntil(this.unSubscribe$)).subscribe(res => {
+    this.appService.search(this.searchText, this.fromYear, this.toYear, this.pageSize * this.pageNo + 1, this.pageSize).pipe(takeUntil(this.unSubscribe$)).subscribe(res => {
       this.searchResult = res;
+      if (this.pageNo * this.pageSize + 1 > this.searchResult.hitsMetadata.total.value) {
+        this.pageNo = (this.searchResult.hitsMetadata.total.value - 1) / this.pageSize;
+        this.pageNo = this.pageNo | 0;
+        this.getSearchResult();
+      }
     });
   }
 
   prev() {
-    if (this.from > 1) {
-      this.from -= this.pageSize;
-      this.from = Math.max(this.from, 1);
+    if (this.pageNo > 0) {
+      this.pageNo--;
       this.getSearchResult();
     }
+
   }
 
   next() {
-    if (this.from + this.pageSize <= this.searchResult.hitsMetadata.total.value) {
-      this.from += this.pageSize;
-      this.from = Math.min(this.from, this.searchResult.hitsMetadata.total.value);
+    if ((this.pageNo + 1) * this.pageSize + 1 <= this.searchResult.hitsMetadata.total.value) {
+      this.pageNo++;
       this.getSearchResult();
     }
   }
