@@ -4,7 +4,8 @@
 
 Clone this file and go to the directory and run: 
 
-> #### docker-compose up
+> #### docker-compose up --build 
+> (try using sudo command if there's any error)
 
 Then use this curl to index movies data in elastic-search:
 
