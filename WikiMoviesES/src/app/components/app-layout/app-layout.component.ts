@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {AppService} from '../../services/app.service';
-import {takeUntil} from 'rxjs/operators';
+import {debounceTime, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {Options} from 'ng5-slider';
 
@@ -43,7 +43,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getSearchResult();
-    this.searchForm.valueChanges.pipe(takeUntil(this.unSubscribe$)).subscribe(() => {
+    this.searchForm.valueChanges.pipe(debounceTime(300), takeUntil(this.unSubscribe$)).subscribe(() => {
       this.getSearchResult();
     });
   }
@@ -56,7 +56,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     this.pageSize = +this.searchForm.get('pageSizeControl').value;
     this.appService.search(this.searchText, this.fromYear, this.toYear, this.pageSize * this.pageNo + 1, this.pageSize).pipe(takeUntil(this.unSubscribe$)).subscribe(res => {
       this.searchResult = res;
-      if (this.pageNo * this.pageSize + 1 > this.searchResult.hitsMetadata.total.value) {
+      if (this.pageNo * this.pageSize + 1 > this.searchResult.hitsMetadata.total.value && this.searchResult.hitsMetadata.total.value > 0) {
         this.pageNo = (this.searchResult.hitsMetadata.total.value - 1) / this.pageSize;
         this.pageNo = this.pageNo | 0;
         this.getSearchResult();
